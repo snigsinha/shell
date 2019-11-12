@@ -1,0 +1,35 @@
+SHELL 2 README
+
+FINAL HANDIN
+
+Code Files: sh.c
+
+Overall Structure of Program (More Detailed comments are in my ‘sh.c’ file): 
+
+In addition to what was written for shell 1, I wrote helper functions:
+
+—ignoring_signals(): sets signals to ignore
+-default_signals(): sets signal to default behaviour
+-bg(char *cmd_array[]): Takes care of scenario where user input is “bg”
+-fg(char * cmd_array[]): Takes care of scenario where user input is “fg”
+-reaping_foreground(char * cmd_array[],pid_t *fork_pid): Reaps foreground process when use r input calls foreground process
+-reaping_background(): Reaps all processes in job list 
+
+Detailed Comments relating to what these do in detail are best found in my sh.c file
+
+Where I dealt with what in main:
+
+As with shell 1, anytime a user inputted a command that I had to implement (in the case for shell 2 “fg”, “bg”, “jobs”, I dealt with it in the main function after parsing but before forking
+
+After forking and execution, I dealt with printing jobs if process is executed with “&”,reaping foreground processes and reaping background processes.
+
+Whenever I exited the program I would clean up the job list. Furthermore, I set the appropriate process groups to the window, to the child process in forking and to the parent after forking. 
+
+NOTE about my function design: If an error was found in any of my functions, since it would take place in the while loop for the REPL, I would want to call continue in the loop. Therefore, many of my functions return an int 0 on success and 1 on error. I error check these functions so when there is an error, my program continues to the next iteration of the while loop. 
+
+
+Known bugs: None
+
+Collaborators: rsrivas 2, talked through approaches for input, output redirection and helped me with debugging a number of things, particularly anything related to where I was calling things so I could pass my tests.
+
+How to compile: run ‘make all’ in your terminal for both versions of my shell or ‘make 33sh’ or ‘make 33noprompt’
